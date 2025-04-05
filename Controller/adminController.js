@@ -33,40 +33,39 @@ const AdminView = async (req, res) => {
       console.log(error);
     }
   };
-
-const AdminLogin = async (req, res) => {
-  try {
-    let success = false;
-
-    const { name, email, password } = req.body;
-
-    let admin = await AdminSchema.findOne({ email, name });
-    if (!admin) {
-      success = false;
-      return res.status(400).json({ msg: "Invalid Credential" });
+  
+  const AdminLogin = async (req, res) => {
+    try {
+      let success = false;
+      const { name, email, password } = req.body;
+  
+      let admin = await AdminSchema.findOne({ email, name });
+      if (!admin) {
+        return res.status(400).json({ success: false, error: "Invalid Credential" });
+      }
+  
+      const passwordcompare = await bcrypt.compare(password, admin.password);
+      if (!passwordcompare) {
+        return res.status(400).json({ 
+          success: false, 
+          error: "Try to login with correct credentials" 
+        });
+      }
+  
+      const payload = {
+        admin: {
+          id: admin.id
+        }
+      };
+      
+      const authtoken = jwt.sign(payload, JWT_SECRET);
+      res.json({ success: true, authtoken });
+  
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, error: "Server error" });
     }
-    const passwordcompare = await bcrypt.compare(password, admin.password);
-
-    if (!passwordcompare) {
-      success = false;
-      return res.json({
-        success,
-        error: "Try to login with correct credentials",
-      });
-    }
-
-    const data = admin.id;
-    const authtoken = jwt.sign(data, JWT_SECRET);
-
-    success = true;
-
-    res.json({ success, authtoken });
-    console.log(authtoken);
-
-  } catch (error) {
-    console.log(error);
-  }
-};
+  };
 
 const Delete = async (req, res) => {
   try {
