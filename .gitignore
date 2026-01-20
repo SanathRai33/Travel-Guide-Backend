@@ -9,3 +9,6 @@ logs/
 *.log
 build/
 dist/
+
+uploads/
+Images/
