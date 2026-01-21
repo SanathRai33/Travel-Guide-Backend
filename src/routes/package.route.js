@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const { getAllPackages } = require('../controllers/package.controller.js')
+const { getAllPackages, getPackageById } = require('../controllers/package.controller.js')
 
-router.get('/get', getAllPackages)
+router.get('/', getAllPackages)
+router.get('/:id', getPackageById)
 
 module.exports = router
