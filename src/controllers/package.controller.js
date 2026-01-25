@@ -4,7 +4,7 @@ const getAllPackages = async (req, res) => {
     try {
         const packages = await PackageModel.find()
             .select(
-                "title images duration location basePrice categories"
+                "title images duration location basePrice categories discount"
             );
 
         return res.status(200).json({
