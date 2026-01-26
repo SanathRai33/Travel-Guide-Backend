@@ -4,7 +4,7 @@ const getAllHotels = async (req, res) => {
     try {
         const hotels = await HotelModel.find()
             .select(
-                "name featuredImage location roomPricing category"
+                "name featuredImage location roomPricing category popularAmenities"
             );
 
         return res.status(200).json({
