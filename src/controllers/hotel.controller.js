@@ -22,4 +22,38 @@ const getAllHotels = async (req, res) => {
 
 };
 
-module.exports = { getAllHotels }
+
+const getHotelById = async (req, res) => {
+    const { id } = req.params;
+    try {
+        if (!id) {
+            return res.status(404).json({
+                message: "Hotel not found.",
+                success: false
+            })
+        }
+
+        const pkg = await HotelModel.findById(id);
+        if (!pkg) {
+            return res.status(404).json({
+                message: "Hotel not found.",
+                success: false
+            })
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: "Hotel found successfully",
+            data: pkg
+        })
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: "Failed to fetch Hotels",
+            error: error.message
+        });
+    }
+}
+
+
+module.exports = { getAllHotels, getHotelById }
