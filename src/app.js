@@ -3,6 +3,7 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const packageRouter = require('../src/routes/package.route.js')
 const hotelRouter = require('../src/routes/hotel.route.js')
+const restuarantRouter = require('../src/routes/restaurant.route.js')
 
 const app = express();
 app.use(cors({
@@ -18,5 +19,6 @@ app.get("/", (req, res)=>{
 
 app.use('/api/packages', packageRouter);
 app.use('/api/hotels', hotelRouter);
+app.use('/api/restaurants', restuarantRouter);
 
 module.exports = app;

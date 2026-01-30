@@ -4,7 +4,7 @@ const getAllRestaurants = async (req, res) => {
     try {
         const restaurants = await RestaurantModel.find()
             .select(
-                "title images duration location basePrice categories discount"
+                "name feturedImage primaryCuisine location priceTier amenities"
             );
 
         return res.status(200).json({

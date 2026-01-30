@@ -425,42 +425,7 @@ const RestaurantSchema = new Schema(
       yearsOfExperience: Number,
       signatureDishes: [String],
     },
-
-    // Awards & Recognition
-    awards: [{
-      name: String,
-      year: Number,
-      category: String,
-      issuer: String,
-    }],
-    certifications: [String], // e.g., "Michelin Star", "AAA Diamond"
-
-    // Ratings & Reviews
-    ratings: {
-      overall: {
-        type: Number,
-        min: 0,
-        max: 5,
-        default: 0,
-      },
-      foodQuality: Number,
-      service: Number,
-      ambiance: Number,
-      valueForMoney: Number,
-      totalReviews: {
-        type: Number,
-        default: 0,
-      },
-      breakdown: {
-        "5": { type: Number, default: 0 },
-        "4": { type: Number, default: 0 },
-        "3": { type: Number, default: 0 },
-        "2": { type: Number, default: 0 },
-        "1": { type: Number, default: 0 },
-      },
-    },
-    reviews: [ReviewSchema],
-
+    
     // Media
     images: [RestaurantImageSchema],
     featuredImage: String,
@@ -646,26 +611,6 @@ RestaurantSchema.methods.checkAvailability = function(date, time, partySize) {
   
   return slot ? true : false;
 };
-
-// Method to update ratings when new review is added
-RestaurantSchema.methods.updateRatings = function(newRating) {
-  const ratingFields = ['overall', 'foodQuality', 'service', 'ambiance', 'valueForMoney'];
   
-  ratingFields.forEach(field => {
-    if (newRating[field]) {
-      const currentTotal = this.ratings[field] * (this.ratings.totalReviews || 0);
-      this.ratings[field] = (currentTotal + newRating[field]) / ((this.ratings.totalReviews || 0) + 1);
-    }
-  });
-  
-  this.ratings.totalReviews = (this.ratings.totalReviews || 0) + 1;
-  
-  // Update breakdown
-  const star = Math.round(newRating.overall);
-  if (star >= 1 && star <= 5) {
-    this.ratings.breakdown[star] = (this.ratings.breakdown[star] || 0) + 1;
-  }
-};
-
 const RestaurantModel = mongoose.model("restaurant", RestaurantSchema);
 module.exports = RestaurantModel;
