@@ -159,53 +159,6 @@ const FeatureSchema = new Schema(
   { _id: false }
 );
 
-// Review Schema (similar to hotel but restaurant-specific)
-const ReviewSchema = new Schema(
-  {
-    userId: {
-      type: Schema.Types.ObjectId,
-      ref: "User",
-    },
-    userName: String,
-    userAvatar: String,
-    rating: {
-      overall: {
-        type: Number,
-        min: 1,
-        max: 5,
-        required: true,
-      },
-      foodQuality: Number,
-      service: Number,
-      ambiance: Number,
-      valueForMoney: Number,
-    },
-    title: String,
-    comment: {
-      type: String,
-      required: true,
-    },
-    visitDate: Date,
-    occasion: {
-      type: String,
-      enum: ["birthday", "anniversary", "business", "casual", "date", "family"],
-    },
-    dishesTried: [String],
-    helpfulCount: {
-      type: Number,
-      default: 0,
-    },
-    verifiedVisit: {
-      type: Boolean,
-      default: false,
-    },
-    images: [String],
-  },
-  {
-    timestamps: true,
-  }
-);
-
 // Location Schema
 const LocationSchema = new Schema(
   {
@@ -612,5 +565,5 @@ RestaurantSchema.methods.checkAvailability = function(date, time, partySize) {
   return slot ? true : false;
 };
   
-const RestaurantModel = mongoose.model("restaurant", RestaurantSchema);
+const RestaurantModel = mongoose.model("restaurant", RestaurantSchema, "restaurant");
 module.exports = RestaurantModel;
