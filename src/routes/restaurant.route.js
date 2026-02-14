@@ -1,7 +1,7 @@
-// const express = require('express');
-// const router = express.Router();
-// const { getAllRestaurants } = require('../controllers/restaurant.controller.js')
+const express = require('express');
+const router = express.Router();
+const { getAllRestaurants } = require('../controllers/restaurant.controller.js')
 
-// router.get('/', getAllRestaurants)
+router.get('/', getAllRestaurants)
 
-// module.exports = router
+module.exports = router

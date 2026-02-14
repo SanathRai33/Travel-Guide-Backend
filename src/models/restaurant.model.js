@@ -565,5 +565,5 @@ RestaurantSchema.methods.checkAvailability = function(date, time, partySize) {
   return slot ? true : false;
 };
   
-const RestaurantModel = mongoose.model("restaurant", RestaurantSchema, "restaurant");
+const RestaurantModel = mongoose.model("restaurant", RestaurantSchema);
 module.exports = RestaurantModel;

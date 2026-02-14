@@ -10,7 +10,7 @@ const connectToMongo = async () => {
       useUnifiedTopology: true,
     });
     console.log('✅ Connected to MongoDB Atlas');
-    console.log('Database:', mongoose.connection.db.databaseName);
+    console.log('Project: TripHarbor', 'Database:', mongoose.connection.name);
   } catch (error) {
     console.error('❌ Failed to connect to MongoDB Atlas:', error);
   }
