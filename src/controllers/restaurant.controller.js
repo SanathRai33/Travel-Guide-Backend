@@ -1,14 +1,10 @@
 const RestaurantModel = require('../models/restaurant.model.js');
 
-console.log('✅ Restaurant model schema defined');
-console.log('RestaurantModel created:', !!RestaurantModel);
-
 const getAllRestaurants = async (req, res) => {
     try {
-        console.log('Fetching restaurants.....');
         const restaurants = await RestaurantModel.find()
-
-        console.log('Found restaurants:', restaurants.length);
+        .select('name location rating priceTier facilities featuredImage amenities primaryCuisine')
+        .lean();
 
         return res.status(200).json({
             success: true,
