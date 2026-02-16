@@ -42,7 +42,7 @@ const getPackageById = async (req, res) => {
 
         return res.status(200).json({
             success: true,
-            message: "Hotel found successfully",
+            message: "Package found successfully",
             data: pkg
         })
     } catch (error) {
